@@ -1,0 +1,30 @@
+architecture 1:
+===============                                
+                                         +------------+ 
+                                         | App Server |
+                 +------------+          +------------+
+            +--- | Web Server |   -----                  ---+
+ +------+   |    +------------+    \ /   +------------+     |    +------------+ 
+ | LBS  |---+                       x    | App Server |     +--  |  Database  |
+ +------+   |    +------------+    / \   +------------+     |    +------------+
+            +--- | Web Server |   -----                  ---+
+                 +------------+          +------------+
+                                         | App Server |
+                                         +------------+
+                                       
+
+Traditional architecture, good performance and extensibility but need external LBS.
+
+architecture 2:
+===============
+
+                   +-----------------+        +-----------------+
+                  /-----------------/        /-----------------/
+                  | Web Server pool | -----  | App Server pool |  ---+
+                  +-----------------+  \ /   +-----------------+     |   +------------+
+      ---------    +-----------------+  x     +-----------------+    +-- |  Database  |
+                  /-----------------/  / \   /-----------------/     |   +------------+
+                  | Web Server pool | -----  | App Server pool |  ---+
+                  +-----------------+        +-----------------+
+ 
+ Leverage kubernetes to scale and load balance the web server and app server, highly extensible. No external LBS needed, but network performance among hosts is a concern, system diagnostic is complex.
